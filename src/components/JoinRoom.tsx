@@ -26,7 +26,7 @@ const JoinRoom = ({
         <input
           id="channel-input"
           onChange={(e) => setChannel(e.target.value)}
-          placeholder="Enter channel to join"
+          placeholder="Enter channel"
           value={channel}
           className="p-2 border rounded"
         />
@@ -39,7 +39,7 @@ const JoinRoom = ({
         <input
           id="token-input"
           onChange={(e) => setToken(e.target.value)}
-          placeholder="Enter token to join"
+          placeholder="Enter token"
           value={token}
           className="p-2 border rounded"
         />

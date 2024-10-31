@@ -1,15 +1,22 @@
 import { RemoteUser, useRemoteUsers } from "agora-rtc-react";
 
 const RemoteUsers = () => {
+  // Get all the remote users
   const remoteUsers = useRemoteUsers();
+
+  // Get the audio/video to render for each remote user
   return (
-    <>
+    <div>
       {remoteUsers.map((user) => (
-        <RemoteUser key={user.uid}>
-          <samp>{user.uid}</samp>
-        </RemoteUser>
+        <div className="w-60 h-52" key={user.uid}>
+          <RemoteUser>
+            <samp className="bg-black text-white px-1 text-sm bottom-0 absolute">
+              {user.uid}
+            </samp>
+          </RemoteUser>
+        </div>
       ))}
-    </>
+    </div>
   );
 };
 
