@@ -9,7 +9,7 @@ const RemoteUsers = () => {
     <div>
       {remoteUsers.map((user) => (
         <div className="w-60 h-52" key={user.uid}>
-          <RemoteUser>
+          <RemoteUser user={user}>
             <samp className="bg-black text-white px-1 text-sm bottom-0 absolute">
               {user.uid}
             </samp>
