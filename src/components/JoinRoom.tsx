@@ -18,27 +18,37 @@ const JoinRoom = ({
   const isDisabled = useMemo(() => !channel || !token, [channel, token]);
 
   return (
-    <div>
-      <div>
-        <label htmlFor="channel-input">Channel Name</label>
+    <div className="grid gap-2">
+      <div className="flex gap-4 justify-between">
+        <label htmlFor="channel-input" className="content-center">
+          Channel Name
+        </label>
         <input
           id="channel-input"
           onChange={(e) => setChannel(e.target.value)}
           placeholder="Enter channel to join"
           value={channel}
+          className="p-2 border rounded"
         />
       </div>
 
-      <div>
-        <label htmlFor="token-input">Token</label>
+      <div className="flex gap-4 justify-between">
+        <label htmlFor="token-input" className="content-center">
+          Token
+        </label>
         <input
           id="token-input"
           onChange={(e) => setToken(e.target.value)}
           placeholder="Enter token to join"
           value={token}
+          className="p-2 border rounded"
         />
       </div>
-      <button disabled={isDisabled} onClick={() => onJoin()}>
+      <button
+        className="bg-blue-500 disabled:bg-gray-100 disabled:text-black text-white p-2 rounded"
+        disabled={isDisabled}
+        onClick={() => onJoin()}
+      >
         Join Room
       </button>
     </div>

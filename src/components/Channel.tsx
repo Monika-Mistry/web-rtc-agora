@@ -9,9 +9,9 @@ import RemoteUsers from "./RemoteUsers";
 import UserControls from "./UserControls";
 
 type ChannelProps = {
-  isJoining: boolean;
+  leaveChannel: () => void;
 };
-const Channel = ({ isJoining }: ChannelProps) => {
+const Channel = ({ leaveChannel }: ChannelProps) => {
   // Local User
   const [micOn, setMicOn] = useState<boolean>(true);
   const [cameraOn, setCameraOn] = useState<boolean>(true);
@@ -22,14 +22,16 @@ const Channel = ({ isJoining }: ChannelProps) => {
 
   return (
     <div>
-      <div>
+      <div className="w-60 h-60">
         <LocalUser
           audioTrack={localMicrophoneTrack}
           videoTrack={localCameraTrack}
           micOn={micOn}
           cameraOn={cameraOn}
         >
-          <samp>You</samp>
+          <samp className="bg-black text-white px-1 text-sm bottom-0 absolute">
+            You
+          </samp>
         </LocalUser>
         <RemoteUsers />
       </div>
@@ -38,6 +40,7 @@ const Channel = ({ isJoining }: ChannelProps) => {
         setMicOn={setMicOn}
         cameraOn={cameraOn}
         setCameraOn={setCameraOn}
+        leaveChannel={leaveChannel}
       />
     </div>
   );
