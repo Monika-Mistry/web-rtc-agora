@@ -7,12 +7,14 @@ import {
 import { useState } from "react";
 import RemoteUsers from "./RemoteUsers";
 import UserControls from "./UserControls";
+import { MicOff } from "lucide-react";
 
 type ChannelProps = {
   leaveChannel: () => void;
 };
+
 const Channel = ({ leaveChannel }: ChannelProps) => {
-  // Local User
+  // Local User controls
   const [micOn, setMicOn] = useState<boolean>(true);
   const [cameraOn, setCameraOn] = useState<boolean>(true);
   // Create a mic and camera track
@@ -23,7 +25,7 @@ const Channel = ({ leaveChannel }: ChannelProps) => {
   usePublish([localCameraTrack, localMicrophoneTrack]);
 
   return (
-    <div className="">
+    <div>
       <div className="grid gap-2 grid-flow-cols">
         <div className="w-60 h-52">
           <LocalUser
@@ -32,8 +34,11 @@ const Channel = ({ leaveChannel }: ChannelProps) => {
             micOn={micOn}
             cameraOn={cameraOn}
           >
-            <samp className="bg-black text-white px-1 text-sm bottom-0 absolute">
+            <samp className="bg-black text-white px-1 text-sm bottom-0 absolute flex">
               You
+              {!micOn && (
+                <MicOff className="text-red-600 self-center ml-1" size={14} />
+              )}
             </samp>
           </LocalUser>
         </div>

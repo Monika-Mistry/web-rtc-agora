@@ -21,7 +21,7 @@ const JoinRoom = ({
     <div className="grid gap-2">
       <div className="flex gap-4 justify-between">
         <label htmlFor="channel-input" className="content-center">
-          Channel Name
+          Room
         </label>
         <input
           id="channel-input"
