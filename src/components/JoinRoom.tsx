@@ -1,20 +1,21 @@
-import { SetStateAction, useMemo, Dispatch } from "react";
+import { LoaderCircle } from "lucide-react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 
 type JoinRoomProps = {
-  channel: string;
-  setChannel: Dispatch<SetStateAction<string>>;
-  token: string;
-  setToken: Dispatch<SetStateAction<string>>;
-  onJoin: () => void;
+  onJoin: (channel: string, token: string) => void;
+  isError: boolean;
+  setIsError: Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean;
 };
 
 const JoinRoom = ({
-  channel,
-  setChannel,
-  token,
-  setToken,
   onJoin,
+  isError,
+  setIsError,
+  isLoading,
 }: JoinRoomProps) => {
+  const [channel, setChannel] = useState<string>("");
+  const [token, setToken] = useState<string>("");
   const isDisabled = useMemo(() => !channel || !token, [channel, token]);
 
   return (
@@ -25,7 +26,10 @@ const JoinRoom = ({
         </label>
         <input
           id="channel-input"
-          onChange={(e) => setChannel(e.target.value)}
+          onChange={(e) => {
+            setChannel(e.target.value);
+            setIsError(false);
+          }}
           placeholder="Enter channel"
           value={channel}
           className="p-2 border rounded"
@@ -38,18 +42,23 @@ const JoinRoom = ({
         </label>
         <input
           id="token-input"
-          onChange={(e) => setToken(e.target.value)}
+          onChange={(e) => {
+            setToken(e.target.value);
+            setIsError(false);
+          }}
           placeholder="Enter token"
           value={token}
           className="p-2 border rounded"
         />
       </div>
+      {isError && <span className="text-red-600">Invalid room or token</span>}
       <button
-        className="bg-blue-500 disabled:bg-gray-100 disabled:text-black text-white p-2 rounded"
-        disabled={isDisabled}
-        onClick={() => onJoin()}
+        className="bg-blue-500 disabled:bg-gray-100 disabled:text-black text-white p-2 rounded gap-2 flex justify-center"
+        disabled={isDisabled || isError}
+        onClick={() => onJoin(channel, token)}
       >
         Join Room
+        {isLoading && <LoaderCircle className="animate-spin text-white" />}
       </button>
     </div>
   );

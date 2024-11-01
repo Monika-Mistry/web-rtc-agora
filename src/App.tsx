@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import JoinRoom from "./components/JoinRoom";
 import { useIsConnected, useJoin } from "agora-rtc-react";
 import Channel from "./components/Channel";
@@ -8,11 +8,12 @@ const App = () => {
   const [token, setToken] = useState<string>("");
   const [isJoining, setIsJoining] = useState<boolean>(false);
   const isConnected = useIsConnected();
+  const [isError, setIsError] = useState<boolean>(false);
 
   const leaveChannel = () => setIsJoining(false);
 
   // Join a channel
-  useJoin(
+  const { error, isLoading } = useJoin(
     {
       appid: import.meta.env.VITE_AGORA_APP_ID,
       channel,
@@ -20,6 +21,17 @@ const App = () => {
     },
     isJoining
   );
+
+  const onJoin = (channelToJoin: string, tokenToJoin: string) => {
+    setChannel(channelToJoin);
+    setToken(tokenToJoin);
+    setIsJoining(true);
+  };
+
+  useEffect(() => {
+    setIsError(!!error);
+  }, [error]);
+
   return (
     <div className="bg-gray-50 h-screen w-screen">
       <div className="grid justify-center gap-5">
@@ -28,11 +40,10 @@ const App = () => {
           <Channel leaveChannel={leaveChannel} />
         ) : (
           <JoinRoom
-            channel={channel}
-            setChannel={setChannel}
-            token={token}
-            setToken={setToken}
-            onJoin={() => setIsJoining(true)}
+            onJoin={onJoin}
+            isError={!!error || isError}
+            setIsError={setIsError}
+            isLoading={isLoading}
           />
         )}
       </div>
